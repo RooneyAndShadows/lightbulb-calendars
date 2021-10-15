@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/month_text_view"
+    style="@style/MonthCalendarItemText"
+    android:layout_width="@dimen/month_calendar_item_size"
+    android:layout_height="@dimen/month_calendar_item_size"
+    android:layout_centerInParent="true"
+    android:background="?selectableItemBackgroundBorderless"
+    android:textSize="@dimen/month_calendar_item_text_size"
+    tools:height="@dimen/month_calendar_item_size"
+    tools:text="MONTH"
+    tools:width="@dimen/month_calendar_item_size" />

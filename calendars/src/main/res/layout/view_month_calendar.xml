@@ -1,0 +1,28 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/header"
+        style="@style/MonthCalendarHeader">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/buttonPrevYear"
+            style="@style/MonthCalendarHeaderButton.prev" />
+
+        <TextView
+            android:id="@+id/header_year_text_view"
+            style="@style/MonthCalendarHeaderText" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/buttonNextYear"
+            style="@style/MonthCalendarHeaderButton.next" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        style="@style/MonthCalendarPager"
+        android:layout_below="@id/header" />
+
+</merge>

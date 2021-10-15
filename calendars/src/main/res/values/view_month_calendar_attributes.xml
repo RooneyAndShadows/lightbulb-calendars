@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calendar_header_default_text">YEAR</string>
+    <string name="calendar_month_item_default_text">MONTH</string>
+    <item name="month_calendar_item_size" type="dimen">60dp</item>
+    <item name="month_calendar_item_text_size" type="dimen">18sp</item>
+    <declare-styleable name="MonthCalendarView">
+        <attr name="monthCalendarMinYear" format="integer" />
+        <attr name="monthCalendarMaxYear" format="integer" />
+        <attr name="monthCalendarMonthTextColor" format="color" />
+        <attr name="monthCalendarSelectedMonthTextColor" format="color" />
+        <attr name="monthCalendarArrowsColor" format="color" />
+        <attr name="monthCalendarBackgroundColor" format="color" />
+        <attr name="monthCalendarMonthSelectionBackgroundColor" format="color" />
+        <attr name="monthCalendarItemSize" format="dimension" />
+    </declare-styleable>
+
+    <style name="MonthCalendarHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="MonthCalendarHeaderButton">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="MonthCalendarHeaderButton.next">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/calendar_button_background</item>
+        <item name="android:src">@drawable/calendar_button_next</item>
+    </style>
+
+    <style name="MonthCalendarHeaderButton.prev">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/calendar_button_background</item>
+        <item name="android:src">@drawable/calendar_button_prev</item>
+    </style>
+
+    <style name="MonthCalendarHeaderText" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MonthCalendarPager">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MonthCalendarItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="MonthCalendarItemText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:clickable">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">@string/calendar_header_default_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>
