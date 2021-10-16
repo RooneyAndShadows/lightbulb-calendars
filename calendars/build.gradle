@@ -54,7 +54,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$versions.android_appcompat"
     implementation "androidx.recyclerview:recyclerview:$versions.android_recyclerview"
     implementation "com.github.RooneyAndShadows:lightbulb-commons:$versions.lightbulb_commons"
-    implementation "com.rands.java:commons:$versions.java_commons"
+    implementation "com.github.RooneyAndShadows:java-commons:$versions.java_commons"
     api "com.google.android.material:material:$versions.material"
 
 }
