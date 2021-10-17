@@ -38,10 +38,10 @@ task sourceJar(type: Jar) {
 }
 
 afterEvaluate {
-    repositories {
-        mavenLocal()
-    }
     publishing {
+        repositories {
+            mavenLocal()
+        }
         publications {
             release(MavenPublication) {
                 from components.release
