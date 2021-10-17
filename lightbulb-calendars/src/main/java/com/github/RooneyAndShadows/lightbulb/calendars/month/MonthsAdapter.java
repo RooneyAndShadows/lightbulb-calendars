@@ -1,4 +1,4 @@
-package com.rands.lightbulb.calendars.month;
+package com.github.RooneyAndShadows.lightbulb.calendars.month;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.RooneyAndShadows.commons.date.DateUtils;
+import com.github.RooneyAndShadows.lightbulb.commons.utils.ResourceUtils;
 import com.rands.lightbulb.calendars.R;
-import com.rands.lightbulb.commons.utils.ResourceUtils;
-import com.rands.java.commons.date.DateUtils;
 
 import java.util.ArrayList;
 

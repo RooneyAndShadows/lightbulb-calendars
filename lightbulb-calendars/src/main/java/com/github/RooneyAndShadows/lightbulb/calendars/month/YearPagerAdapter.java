@@ -1,9 +1,10 @@
-package com.rands.lightbulb.calendars.month;
+package com.github.RooneyAndShadows.lightbulb.calendars.month;
 
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rands.java.commons.date.DateUtils;
+
+import com.github.RooneyAndShadows.commons.date.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
