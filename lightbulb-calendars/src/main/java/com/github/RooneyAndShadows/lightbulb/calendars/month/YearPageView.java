@@ -1,10 +1,10 @@
-package com.github.RooneyAndShadows.lightbulb.calendars.month;
+package com.github.rooneyandshadows.lightbulb.calendars.month;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
 
-import com.github.RooneyAndShadows.commons.date.DateUtils;
+import com.github.rooneyandshadows.commons.date.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.github.RooneyAndShadows.lightbulb.calendars.month.MonthsAdapter.*;
+import static com.github.rooneyandshadows.lightbulb.calendars.month.MonthsAdapter.*;
 
 class YearPageView extends RecyclerView {
     private MonthCalendarView calendarView;

@@ -1,4 +1,4 @@
-package com.rands.lightbulb.calendars;
+package com.github.rooneyandshadows.lightbulb.calendars;
 
 import androidx.appcompat.app.AppCompatActivity;
 
