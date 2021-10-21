@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.rooneyandshadows.commons.date.DateUtils;
+import com.github.rooneyandshadows.java.commons.date.DateUtils;
 import com.github.rooneyandshadows.lightbulb.commons.utils.ResourceUtils;
 import com.github.rooneyandshadows.lightbulb.calendars.R;
 

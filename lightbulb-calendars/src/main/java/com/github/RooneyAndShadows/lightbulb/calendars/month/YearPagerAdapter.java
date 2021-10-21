@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.github.rooneyandshadows.commons.date.DateUtils;
+import com.github.rooneyandshadows.java.commons.date.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
