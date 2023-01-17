@@ -1,4 +1,4 @@
-package com.github.rooneyandshadowss.lightbulb.calendars.month
+package com.github.rooneyandshadows.lightbulb.calendars.month
 
 import android.content.Context
 import android.os.Parcel
@@ -16,8 +16,8 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
-import com.github.rooneyandshadowss.lightbulb.calendars.month.adapter.MonthEntry
-import com.github.rooneyandshadowss.lightbulb.calendars.month.adapter.YearPagerAdapter
+import com.github.rooneyandshadows.lightbulb.calendars.month.adapter.MonthEntry
+import com.github.rooneyandshadows.lightbulb.calendars.month.adapter.YearPagerAdapter
 import com.github.rooneyandshadows.java.commons.date.DateUtilsOffsetDate
 import com.github.rooneyandshadows.lightbulb.calendars.R
 import com.github.rooneyandshadows.lightbulb.calendars.R.styleable.*

@@ -1,9 +1,9 @@
-package com.github.rooneyandshadowss.lightbulb.calendars.month.adapter
+package com.github.rooneyandshadows.lightbulb.calendars.month.adapter
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
-import com.github.rooneyandshadowss.lightbulb.calendars.month.MonthCalendarView
+import com.github.rooneyandshadows.lightbulb.calendars.month.MonthCalendarView
 import java.time.OffsetDateTime
 import java.util.*
 

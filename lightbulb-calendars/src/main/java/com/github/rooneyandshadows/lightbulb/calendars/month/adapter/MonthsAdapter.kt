@@ -1,4 +1,4 @@
-package com.github.rooneyandshadowss.lightbulb.calendars.month.adapter
+package com.github.rooneyandshadows.lightbulb.calendars.month.adapter
 
 import android.graphics.drawable.Drawable
 import android.os.Parcel
@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.recyclerview.widget.RecyclerView.*
-import com.github.rooneyandshadowss.lightbulb.calendars.month.MonthCalendarView
-import com.github.rooneyandshadowss.lightbulb.calendars.month.adapter.MonthsAdapter.MonthVH
+import com.github.rooneyandshadows.lightbulb.calendars.month.MonthCalendarView
+import com.github.rooneyandshadows.lightbulb.calendars.month.adapter.MonthsAdapter.MonthVH
 import com.github.rooneyandshadows.java.commons.date.DateUtils
 import com.github.rooneyandshadows.lightbulb.calendars.R
 import com.github.rooneyandshadows.lightbulb.commons.utils.ResourceUtils

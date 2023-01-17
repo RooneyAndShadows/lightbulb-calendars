@@ -1,4 +1,4 @@
-package com.github.rooneyandshadowss.lightbulb.calendars.month.adapter
+package com.github.rooneyandshadows.lightbulb.calendars.month.adapter
 
 import android.os.Parcel
 import android.os.Parcelable
