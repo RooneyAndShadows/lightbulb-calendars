@@ -79,7 +79,7 @@ internal class YearPagerAdapter(private val calendarView: MonthCalendarView, var
     fun clearSelection() {
         if (selection == null) return
         val yearView = getPageByYear(selection!!.year)
-        yearView!!.clearSelection()
+        yearView?.clearSelection()
         selection = null
     }
 
