@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Calendars</string>
+    <string name="demo_calendar_month">Month calendar</string>
 </resources>

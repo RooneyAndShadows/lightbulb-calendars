@@ -11,7 +11,9 @@ buildscript {
                 android_recyclerview: "1.2.1",
                 material            : "1.7.0",
                 lightbulb           : [
-                        commons: "1.0.18",
+                        commons              : "1.0.18",
+                        application          : "1.2.8",
+                        annotation_processors: "1.0.6-RC2"
                 ],
                 java                : [
                         commons: "1.0.6"
