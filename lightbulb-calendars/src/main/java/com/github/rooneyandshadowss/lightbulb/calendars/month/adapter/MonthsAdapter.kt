@@ -1,4 +1,4 @@
-package com.github.RooneyAndShadows.lightbulb.calendars.month.adapter
+package com.github.rooneyandshadowss.lightbulb.calendars.month.adapter
 
 import android.graphics.drawable.Drawable
 import android.os.Parcel
@@ -9,15 +9,15 @@ import android.widget.TextView
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.recyclerview.widget.RecyclerView.*
-import com.github.RooneyAndShadows.lightbulb.calendars.month.MonthCalendarView
-import com.github.RooneyAndShadows.lightbulb.calendars.month.adapter.MonthsAdapter.MonthVH
+import com.github.rooneyandshadowss.lightbulb.calendars.month.MonthCalendarView
+import com.github.rooneyandshadowss.lightbulb.calendars.month.adapter.MonthsAdapter.MonthVH
 import com.github.rooneyandshadows.java.commons.date.DateUtils
 import com.github.rooneyandshadows.lightbulb.calendars.R
 import com.github.rooneyandshadows.lightbulb.commons.utils.ResourceUtils
 
 internal class MonthsAdapter(
     private val calendarView: MonthCalendarView,
-    private val items: MutableList<MonthItem>
+    private val items: MutableList<MonthItem>,
 ) : Adapter<MonthVH>() {
 
     @Override
@@ -96,7 +96,7 @@ internal class MonthsAdapter(
         val currentYear: Int,
         val currentMonth: Int,
         var isSelected: Boolean,
-        val isEnabled: Boolean
+        val isEnabled: Boolean,
     ) : Parcelable {
         val monthName: String = DateUtils.getDateString(
             "MMM", DateUtils.date(

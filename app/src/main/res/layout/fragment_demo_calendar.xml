@@ -42,7 +42,7 @@
                 android:clipToPadding="false"
                 android:orientation="vertical">
 
-                <com.github.RooneyAndShadows.lightbulb.calendars.month.MonthCalendarView
+                <com.github.rooneyandshadows.lightbulb.calendars.month.MonthCalendarView
                     android:id="@+id/monthCalendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

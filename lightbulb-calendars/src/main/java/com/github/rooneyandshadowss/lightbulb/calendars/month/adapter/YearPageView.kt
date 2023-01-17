@@ -1,11 +1,11 @@
-package com.github.RooneyAndShadows.lightbulb.calendars.month.adapter
+package com.github.rooneyandshadowss.lightbulb.calendars.month.adapter
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.RooneyAndShadows.lightbulb.calendars.month.MonthCalendarView
-import com.github.RooneyAndShadows.lightbulb.calendars.month.adapter.MonthsAdapter.*
+import com.github.rooneyandshadowss.lightbulb.calendars.month.MonthCalendarView
+import com.github.rooneyandshadowss.lightbulb.calendars.month.adapter.MonthsAdapter.*
 import com.github.rooneyandshadows.java.commons.date.DateUtils
 import java.util.*
 
