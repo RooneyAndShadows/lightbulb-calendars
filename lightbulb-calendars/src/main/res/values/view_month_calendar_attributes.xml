@@ -5,14 +5,14 @@
     <item name="month_calendar_item_size" type="dimen">60dp</item>
     <item name="month_calendar_item_text_size" type="dimen">18sp</item>
     <declare-styleable name="MonthCalendarView">
-        <attr name="monthCalendarMinYear" format="integer" />
-        <attr name="monthCalendarMaxYear" format="integer" />
-        <attr name="monthCalendarMonthTextColor" format="color" />
-        <attr name="monthCalendarSelectedMonthTextColor" format="color" />
-        <attr name="monthCalendarArrowsColor" format="color" />
-        <attr name="monthCalendarBackgroundColor" format="color" />
-        <attr name="monthCalendarMonthSelectionBackgroundColor" format="color" />
-        <attr name="monthCalendarItemSize" format="dimension" />
+        <attr name="mcv_minYear" format="integer" />
+        <attr name="mcv_maxYear" format="integer" />
+        <attr name="mcv_monthTextColor" format="color" />
+        <attr name="mcv_selectedMonthTextColor" format="color" />
+        <attr name="mcv_arrowsColor" format="color" />
+        <attr name="mcv_backgroundColor" format="color" />
+        <attr name="mcv_monthSelectionBackgroundColor" format="color" />
+        <attr name="mcv_calendarItemSize" format="dimension" />
     </declare-styleable>
 
     <style name="MonthCalendarHeader">
