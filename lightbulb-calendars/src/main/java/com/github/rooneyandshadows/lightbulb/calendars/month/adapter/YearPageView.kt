@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.rooneyandshadows.lightbulb.calendars.month.MonthCalendarView
 import com.github.rooneyandshadows.lightbulb.calendars.month.adapter.MonthsAdapter.*
 import com.github.rooneyandshadows.java.commons.date.DateUtils
+import com.github.rooneyandshadows.java.commons.date.DateUtilsOffsetDate
 import java.util.*
 
 internal class YearPageView : RecyclerView {
@@ -41,14 +42,14 @@ internal class YearPageView : RecyclerView {
 
     private fun generateMonthsForYear(): MutableList<MonthItem> {
         val items: MutableList<MonthItem> = mutableListOf()
-        for (date in DateUtils.getAllMonthsForYear(year)) {
-            val currentYear = DateUtils.extractYearFromDate(date)
-            val currentMonth = DateUtils.extractMonthOfYearFromDate(date)
-            val currentMonthAsArray = intArrayOf(currentYear, currentMonth)
-            val calendarSelectionAsArray = calendarView.selectionAsArray
-            val enabled = calendarView.isMonthEnabled(currentMonthAsArray[0], currentMonthAsArray[1])
-            val selected = Arrays.equals(calendarSelectionAsArray, currentMonthAsArray)
-            items.add(MonthItem(currentYear, currentMonth, selected, enabled))
+        for (date in DateUtilsOffsetDate.getAllMonthsForYear(year)) {
+            val currentMonth = MonthEntry.fromDate(date)
+            val calendarMonth = calendarView.selection
+            val isSelected = currentMonth.compare(calendarMonth)
+            val isEnabled = calendarView.isMonthEnabled(currentMonth)
+            items.apply {
+                add(MonthItem(currentMonth, isSelected, isEnabled))
+            }
         }
         return items
     }

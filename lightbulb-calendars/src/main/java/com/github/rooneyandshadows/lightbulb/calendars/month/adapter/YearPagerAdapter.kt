@@ -83,28 +83,30 @@ internal class YearPagerAdapter(private val calendarView: MonthCalendarView, var
         selection = null
     }
 
+    fun isMonthEnabled(month: MonthEntry): Boolean {
+        return isMonthEnabled(month.year, month.month)
+    }
+
     fun isMonthEnabled(year: Int, month: Int): Boolean {
-        val targetMonth = MonthEntry(year, month)
         if (enabledMonths.isNotEmpty())
-            return enabledMonths.any { return it.compare(targetMonth) }
+            return enabledMonths.any { return it.compare(year, month) }
         if (disabledMonths.isNotEmpty())
-            return disabledMonths.any { return it.compare(targetMonth) }
+            return disabledMonths.any { return it.compare(year, month) }
         return true
     }
 
-    fun select(newYear: Int, newMonth: Int) {
-        var year = newYear
-        var month = newMonth
-        if (year < minYear) year = minYear
-        if (year > maxYear) year = maxYear
-        if (month < 1) month = 1
-        if (month > 12) month = 12
-        val newSelection = MonthEntry(year, month)
-        if (!isMonthEnabled(year, month)) return
+    fun select(newSelection: MonthEntry) {
+        val month = newSelection.getWithinYearBounds(minYear, maxYear)
+        if (!isMonthEnabled(month)) return
         clearSelection()
-        selection = newSelection
-        val page = getPageByYear(selection!!.year)
-        page?.select(selection!!.month)
+        selection = month
+        getPageByYear(selection!!.year)?.apply {
+            select(selection!!.month)
+        }
+    }
+
+    fun select(year: Int, month: Int) {
+        select(MonthEntry(year, month))
     }
 
     fun setEnabledMonths(enabled: List<MonthEntry>) {

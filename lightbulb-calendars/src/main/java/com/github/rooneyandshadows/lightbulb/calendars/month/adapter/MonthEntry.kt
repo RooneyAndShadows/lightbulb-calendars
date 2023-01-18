@@ -2,19 +2,25 @@ package com.github.rooneyandshadows.lightbulb.calendars.month.adapter
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.github.rooneyandshadows.java.commons.date.DateUtils
 import com.github.rooneyandshadows.java.commons.date.DateUtilsOffsetDate
 import java.time.OffsetDateTime
+import kotlin.math.max
+import kotlin.math.min
 
-class MonthEntry(year: Int, month: Int) : Parcelable {
-    var year: Int = year
-        private set
-    var month: Int = month
-        private set
+class MonthEntry(val year: Int, val month: Int) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt()
     )
+
+    val monthName: String
+        get() = DateUtilsOffsetDate.getDateString("MMM", toDate())
+
+    fun compare(year: Int, month: Int): Boolean {
+        return year == this.year && month == this.month
+    }
 
     fun compare(target: MonthEntry?): Boolean {
         if (target == null) return false
@@ -27,6 +33,11 @@ class MonthEntry(year: Int, month: Int) : Parcelable {
 
     fun toDate(): OffsetDateTime {
         return DateUtilsOffsetDate.date(year, month)
+    }
+
+
+    fun getWithinYearBounds(minYear: Int, maxYear: Int): MonthEntry {
+        return CREATOR.getWithinYearBounds(year, month, minYear, maxYear)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -45,6 +56,20 @@ class MonthEntry(year: Int, month: Int) : Parcelable {
 
         override fun newArray(size: Int): Array<MonthEntry?> {
             return arrayOfNulls(size)
+        }
+
+        @JvmStatic
+        fun fromDate(date: OffsetDateTime): MonthEntry {
+            val year = DateUtilsOffsetDate.extractYearFromDate(date)
+            val month = DateUtilsOffsetDate.extractMonthOfYearFromDate(date)
+            return MonthEntry(year, month)
+        }
+
+        @JvmStatic
+        fun getWithinYearBounds(targetYear: Int, targetMonth: Int, minYear: Int, maxYear: Int): MonthEntry {
+            val year = min(maxYear, max(minYear, targetYear))
+            val month = min(12, max(1, targetMonth))
+            return MonthEntry(year, month)
         }
 
         @JvmStatic

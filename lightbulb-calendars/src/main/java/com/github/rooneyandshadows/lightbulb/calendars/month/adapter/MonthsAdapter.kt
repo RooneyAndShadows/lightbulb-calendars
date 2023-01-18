@@ -11,8 +11,8 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.recyclerview.widget.RecyclerView.*
 import com.github.rooneyandshadows.lightbulb.calendars.month.MonthCalendarView
 import com.github.rooneyandshadows.lightbulb.calendars.month.adapter.MonthsAdapter.MonthVH
-import com.github.rooneyandshadows.java.commons.date.DateUtils
 import com.github.rooneyandshadows.lightbulb.calendars.R
+import com.github.rooneyandshadows.lightbulb.commons.utils.ParcelUtils
 import com.github.rooneyandshadows.lightbulb.commons.utils.ResourceUtils
 
 internal class MonthsAdapter(
@@ -41,7 +41,7 @@ internal class MonthsAdapter(
         var position = -1
         for (pos in items.indices) {
             val item = items[pos]
-            if (item.currentMonth == month) {
+            if (item.monthEntry.month == month) {
                 position = pos
                 break
             }
@@ -66,56 +66,44 @@ internal class MonthsAdapter(
         }
     }
 
-    class MonthVH internal constructor(view: TextView) : ViewHolder(view) {
-        private var monthView: TextView
-
-        init {
-            monthView = view
-        }
+    class MonthVH internal constructor(private val monthView: TextView) : ViewHolder(monthView) {
 
         fun bindItem(item: MonthItem, calendarView: MonthCalendarView) {
-            val context = monthView.context
-            monthView.layoutParams = ViewGroup.LayoutParams(calendarView.tileSize, calendarView.tileSize)
-            monthView.setOnClickListener { calendarView.setSelectedMonth(item.currentYear, item.currentMonth) }
-            monthView.isEnabled = item.isEnabled
-            monthView.text = item.monthName
-            if (item.isSelected) {
-                val background: Drawable = ResourceUtils.getDrawable(context, R.drawable.calendar_selected_item_background)!!
-                background.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                    calendarView.backgroundColorSelected,
-                    BlendModeCompat.SRC_ATOP
-                )
-                monthView.background = background
-            } else {
-                monthView.background = null
+            monthView.apply {
+                layoutParams = ViewGroup.LayoutParams(calendarView.tileSize, calendarView.tileSize)
+                setOnClickListener { calendarView.setSelectedMonth(item.monthEntry) }
+                isEnabled = item.isEnabled
+                text = item.monthEntry.monthName
+                background = if (item.isSelected) {
+                    ResourceUtils.getDrawable(context, R.drawable.calendar_selected_item_background)!!.apply {
+                        colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                            calendarView.backgroundColorSelected,
+                            BlendModeCompat.SRC_ATOP
+                        )
+                    }
+                } else null
             }
         }
     }
 
     class MonthItem(
-        val currentYear: Int,
-        val currentMonth: Int,
+        val monthEntry: MonthEntry,
         var isSelected: Boolean,
         val isEnabled: Boolean,
     ) : Parcelable {
-        val monthName: String = DateUtils.getDateString(
-            "MMM", DateUtils.date(
-                currentYear, currentMonth
-            )
-        )
 
         constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readInt(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte()
+            ParcelUtils.readParcelable(parcel, MonthEntry::class.java)!!,
+            ParcelUtils.readBoolean(parcel)!!,
+            ParcelUtils.readBoolean(parcel)!!
         )
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeInt(currentYear)
-            parcel.writeInt(currentMonth)
-            parcel.writeByte(if (isSelected) 1 else 0)
-            parcel.writeByte(if (isEnabled) 1 else 0)
+            ParcelUtils.apply {
+                writeParcelable(parcel, monthEntry)
+                writeBoolean(parcel, isSelected)
+                writeBoolean(parcel, isEnabled)
+            }
         }
 
         override fun describeContents(): Int {

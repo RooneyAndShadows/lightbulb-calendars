@@ -299,11 +299,31 @@ class MonthCalendarView @JvmOverloads constructor(
     /**
      * Method is used to select month.
      *
+     * @param month desired month to select
+     */
+    fun setSelectedMonth(month: MonthEntry) {
+        selectMonthInternally(month, true)
+    }
+
+    /**
+     * Method is used to select month.
+     *
      * @param year  desired year to select
      * @param month desired month to select
      */
     fun setSelectedMonth(year: Int, month: Int) {
-        selectMonthInternally(year, month, true)
+        selectMonthInternally(MonthEntry(year, month), true)
+    }
+
+    /**
+     * Method is used to select month and scroll to it's position.
+     *
+     * @param month        desired month to select
+     * @param smoothScroll scroll animation enabled
+     */
+    fun setSelectedMonthAndScrollToYear(month: MonthEntry, smoothScroll: Boolean) {
+        selectMonthInternally(month, true)
+        goToYear(month.year, smoothScroll)
     }
 
     /**
@@ -314,7 +334,7 @@ class MonthCalendarView @JvmOverloads constructor(
      * @param smoothScroll scroll animation enabled
      */
     fun setSelectedMonthAndScrollToYear(year: Int, month: Int, smoothScroll: Boolean) {
-        selectMonthInternally(year, month, true)
+        selectMonthInternally(MonthEntry(year, month), true)
         goToYear(year, smoothScroll)
     }
 
@@ -328,10 +348,10 @@ class MonthCalendarView @JvmOverloads constructor(
         setSelectedMonthAndScrollToYear(year, month, false)
     }
 
-    private fun selectMonthInternally(year: Int, month: Int, triggerChangeEvents: Boolean) {
-        val newSelection = MonthEntry(year, month)
-        if (!isMonthEnabled(year, month) || newSelection.compare(selection)) return
-        adapter.select(year, month)
+    private fun selectMonthInternally(monthEntry: MonthEntry, triggerChangeEvents: Boolean) {
+        val newSelection = monthEntry.getWithinYearBounds(minYear, maxYear)
+        if (!isMonthEnabled(monthEntry) || newSelection.compare(selection)) return
+        adapter.select(newSelection)
         if (!triggerChangeEvents) return
         dataBindingSelectionChangeListener?.onSelectionChanged(adapter.selectedMonth)
         for (listener in selectionListeners) listener.onSelectionChanged(adapter.selectedMonth)
@@ -351,6 +371,10 @@ class MonthCalendarView @JvmOverloads constructor(
     fun setEnabledMonths(enabledMonths: List<MonthEntry>) {
         adapter.setEnabledMonths(enabledMonths)
         handleInitialPosition()
+    }
+
+    fun isMonthEnabled(month: MonthEntry): Boolean {
+        return isMonthEnabled(month.year, month.month)
     }
 
     fun isMonthEnabled(year: Int, month: Int): Boolean {
@@ -373,7 +397,6 @@ class MonthCalendarView @JvmOverloads constructor(
         currentShownYear = year
         updateHeader()
     }
-
 
     private fun handleSelection(newSelection: MonthEntry?) {
         if (newSelection == null) {
