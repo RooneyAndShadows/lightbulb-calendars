@@ -35,9 +35,12 @@ class MonthEntry(val year: Int, val month: Int) : Parcelable {
         return DateUtilsOffsetDate.date(year, month)
     }
 
-
     fun getWithinYearBounds(minYear: Int, maxYear: Int): MonthEntry {
         return CREATOR.getWithinYearBounds(year, month, minYear, maxYear)
+    }
+
+    fun getMonthString(format: String = "MMMM YYYY"): String {
+        return DateUtilsOffsetDate.getDateString(format, toDate())
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

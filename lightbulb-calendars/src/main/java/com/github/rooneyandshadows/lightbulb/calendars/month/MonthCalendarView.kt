@@ -46,7 +46,7 @@ class MonthCalendarView @JvmOverloads constructor(
     private var colorHeaderArrows: Int = -1
     private var initialMinYear = 1970
     private var initialMaxYear = 2100
-    private var dataBindingSelectionChangeListener: InternalSelectionChangeListener? = null
+    private var dataBindingSelectionChangeListener: SelectionChangeListener? = null
     private val selectionListeners = ArrayList<SelectionChangeListener>()
     val selectionAsArray: IntArray?
         get() = adapter.selectedMonthAsArray
@@ -292,6 +292,10 @@ class MonthCalendarView @JvmOverloads constructor(
         else goToYear(currentYear, false)
     }
 
+    fun removeSelectionChangeListener(listener: SelectionChangeListener) {
+        selectionListeners.remove(listener)
+    }
+
     fun addSelectionChangeListener(listener: SelectionChangeListener) {
         selectionListeners.add(listener)
     }
@@ -321,7 +325,8 @@ class MonthCalendarView @JvmOverloads constructor(
      * @param month        desired month to select
      * @param smoothScroll scroll animation enabled
      */
-    fun setSelectedMonthAndScrollToYear(month: MonthEntry, smoothScroll: Boolean) {
+    @JvmOverloads
+    fun setSelectedMonthAndScrollToYear(month: MonthEntry, smoothScroll: Boolean = true) {
         selectMonthInternally(month, true)
         goToYear(month.year, smoothScroll)
     }
@@ -333,34 +338,25 @@ class MonthCalendarView @JvmOverloads constructor(
      * @param month        desired month to select
      * @param smoothScroll scroll animation enabled
      */
-    fun setSelectedMonthAndScrollToYear(year: Int, month: Int, smoothScroll: Boolean) {
+    @JvmOverloads
+    fun setSelectedMonthAndScrollToYear(year: Int, month: Int, smoothScroll: Boolean = true) {
         selectMonthInternally(MonthEntry(year, month), true)
         goToYear(year, smoothScroll)
-    }
-
-    /**
-     * Method is used to select month and scroll to it's position.
-     *
-     * @param year  desired year to select
-     * @param month desired month to select
-     */
-    fun setSelectedMonthAndScrollToYear(year: Int, month: Int) {
-        setSelectedMonthAndScrollToYear(year, month, false)
     }
 
     private fun selectMonthInternally(monthEntry: MonthEntry, triggerChangeEvents: Boolean) {
         val newSelection = monthEntry.getWithinYearBounds(minYear, maxYear)
         if (!isMonthEnabled(monthEntry) || newSelection.compare(selection)) return
+        val oldSelection = adapter.selectedMonth
         adapter.select(newSelection)
         if (!triggerChangeEvents) return
-        dataBindingSelectionChangeListener?.onSelectionChanged(adapter.selectedMonth)
-        for (listener in selectionListeners) listener.onSelectionChanged(adapter.selectedMonth)
+        dispatchSelectionChangeListeners(newSelection, oldSelection)
     }
 
     fun clearSelection() {
+        val oldSelection = adapter.selectedMonth
         adapter.clearSelection()
-        dataBindingSelectionChangeListener?.onSelectionChanged(adapter.selectedMonth)
-        for (listener in selectionListeners) listener.onSelectionChanged(adapter.selectedMonth)
+        dispatchSelectionChangeListeners(null, oldSelection)
     }
 
     fun setDisabledMonths(disabledMonths: List<MonthEntry>) {
@@ -381,17 +377,20 @@ class MonthCalendarView @JvmOverloads constructor(
         return adapter.isMonthEnabled(year, month)
     }
 
-    fun goToPreviousPage(smoothScroll: Boolean) {
+    @JvmOverloads
+    fun goToPreviousPage(smoothScroll: Boolean = true) {
         pagerView.setCurrentItem(pagerView.currentItem - 1, smoothScroll)
         updateHeader()
     }
 
-    fun goToNextPage(smoothScroll: Boolean) {
+    @JvmOverloads
+    fun goToNextPage(smoothScroll: Boolean = true) {
         pagerView.setCurrentItem(pagerView.currentItem + 1, smoothScroll)
         updateHeader()
     }
 
-    fun goToYear(year: Int, smoothScroll: Boolean) {
+    @JvmOverloads
+    fun goToYear(year: Int, smoothScroll: Boolean = true) {
         if (year > adapter.maxYear || year < adapter.minYear) return
         pagerView.setCurrentItem(adapter.getPagePositionByYear(year), smoothScroll)
         currentShownYear = year
@@ -406,6 +405,13 @@ class MonthCalendarView @JvmOverloads constructor(
         if (!isMonthEnabled(newSelection.year, newSelection.month)) return
         adapter.select(newSelection.year, newSelection.month)
         goToYear(newSelection.year, false)
+    }
+
+    private fun dispatchSelectionChangeListeners(newSelection: MonthEntry?, oldSelection: MonthEntry?) {
+        dataBindingSelectionChangeListener?.onSelectionChanged(this, newSelection, oldSelection)
+        selectionListeners.forEach {
+            it.onSelectionChanged(this, newSelection, oldSelection)
+        }
     }
 
     private class SavedState : BaseSavedState {
@@ -462,12 +468,8 @@ class MonthCalendarView @JvmOverloads constructor(
         }
     }
 
-    private interface InternalSelectionChangeListener {
-        fun onSelectionChanged(selection: MonthEntry?)
-    }
-
     interface SelectionChangeListener {
-        fun onSelectionChanged(selection: MonthEntry?)
+        fun onSelectionChanged(monthCalendarView: MonthCalendarView, newSelection: MonthEntry?, oldSelection: MonthEntry?)
     }
 
     companion object {
@@ -501,9 +503,13 @@ class MonthCalendarView @JvmOverloads constructor(
 
         @BindingAdapter("monthCalendarSelectionChanged")
         fun setListeners(view: MonthCalendarView, attrChange: InverseBindingListener) {
-            view.dataBindingSelectionChangeListener = object :
-                InternalSelectionChangeListener {
-                override fun onSelectionChanged(selection: MonthEntry?) {
+            view.dataBindingSelectionChangeListener = object : SelectionChangeListener {
+                @Override
+                override fun onSelectionChanged(
+                    monthCalendarView: MonthCalendarView,
+                    newSelection: MonthEntry?,
+                    oldSelection: MonthEntry?
+                ) {
                     attrChange.onChange()
                 }
             }
