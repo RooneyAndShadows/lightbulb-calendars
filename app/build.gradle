@@ -40,9 +40,9 @@ android {
 
 dependencies {
     implementation "androidx.core:core-ktx:$versions.ktx.core"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "androidx.appcompat:appcompat:$versions.android_appcompat"
     implementation "com.google.android.material:material:$versions.material"
+    implementation "com.github.rooneyandshadows:lightbulb-commons:$versions.lightbulb.commons"
     implementation "com.github.rooneyandshadows:lightbulb-application:$versions.lightbulb.application"
     implementation "com.github.rooneyandshadows:lightbulb-annotation-processors:$versions.lightbulb.annotation_processors"
     implementation project(path: ':lightbulb-calendars')

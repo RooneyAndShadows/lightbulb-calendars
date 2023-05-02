@@ -10,7 +10,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 33
         versionCode 200
-        versionName "2.0.0-RC1"
+        versionName "2.0.0-RC2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -63,5 +63,4 @@ dependencies {
     implementation "com.github.rooneyandshadows:lightbulb-commons:$versions.lightbulb.commons"
     implementation "com.github.rooneyandshadows:java-commons:$versions.java.commons"
     implementation "com.google.android.material:material:$versions.material"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 }

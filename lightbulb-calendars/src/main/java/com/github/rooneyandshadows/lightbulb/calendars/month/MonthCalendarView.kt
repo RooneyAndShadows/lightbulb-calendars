@@ -428,8 +428,8 @@ class MonthCalendarView @JvmOverloads constructor(
         constructor(superState: Parcelable?) : super(superState)
 
         private constructor(parcel: Parcel) : super(parcel) {
-            enabledMonths = ParcelUtils.readTypedList(parcel, MonthEntry::class.java) as MutableList<MonthEntry>
-            disabledMonths = ParcelUtils.readTypedList(parcel, MonthEntry::class.java) as MutableList<MonthEntry>
+            enabledMonths = ParcelUtils.readList(parcel, MonthEntry::class.java) as MutableList<MonthEntry>
+            disabledMonths = ParcelUtils.readList(parcel, MonthEntry::class.java) as MutableList<MonthEntry>
             selectedMonth = ParcelUtils.readParcelable(parcel, MonthEntry::class.java)
             minYear = parcel.readInt()
             maxYear = parcel.readInt()
