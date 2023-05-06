@@ -13,20 +13,47 @@ internal class YearPagerAdapter(private val calendarView: MonthCalendarView, var
     private var selection: MonthEntry? = null
     private val years = ArrayList<Int>()
     private val gridViews: MutableMap<Int, YearPageView> = mutableMapOf()
-    val disabledMonths: MutableList<MonthEntry> = mutableListOf()
-    val enabledMonths: MutableList<MonthEntry> = mutableListOf()
-
-    init {
-        setBounds(minYear, maxYear)
-    }
-
     val selectedMonthAsArray: IntArray?
         get() = selection?.toArray()
     val selectedMonthAsDate: OffsetDateTime?
         get() = selection?.toDate()
     val selectedMonth: MonthEntry?
         get() = selection
+    var enabledMonths: List<MonthEntry> = mutableListOf()
+        set(value) {
+            field = value
+            field.apply {
+                if (isNotEmpty()) {
+                    minYear = first().year
+                    maxYear = last().year
+                    var clearCurrentSelection = true
+                    forEach { enabledMonth ->
+                        val currentYear = enabledMonth.year
+                        if (enabledMonth.compare(selection))
+                            clearCurrentSelection = false
+                        if (currentYear < minYear) minYear = currentYear
+                        if (currentYear > maxYear) maxYear = currentYear
+                    }
+                    if (clearCurrentSelection) clearSelection()
+                }
+            }
+            initYearModels()
+        }
+        get() = field.toList()
+    var disabledMonths: List<MonthEntry> = mutableListOf()
+        set(value) {
+            field = value
+            field.apply {
+                if (any { it.compare(selection) })
+                    clearSelection()
+            }
+            initYearModels()
+        }
+        get() = field.toList()
 
+    init {
+        setBounds(minYear, maxYear)
+    }
 
     @Override
     override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
@@ -107,37 +134,6 @@ internal class YearPagerAdapter(private val calendarView: MonthCalendarView, var
 
     fun select(year: Int, month: Int) {
         select(MonthEntry(year, month))
-    }
-
-    fun setEnabledMonths(enabled: List<MonthEntry>) {
-        enabledMonths.apply {
-            clear()
-            addAll(enabled)
-            if (isNotEmpty()) {
-                minYear = first().year
-                maxYear = last().year
-                var clearCurrentSelection = true
-                forEach { enabledMonth ->
-                    val currentYear = enabledMonth.year
-                    if (enabledMonth.compare(selection))
-                        clearCurrentSelection = false
-                    if (currentYear < minYear) minYear = currentYear
-                    if (currentYear > maxYear) maxYear = currentYear
-                }
-                if (clearCurrentSelection) clearSelection()
-            }
-        }
-        initYearModels()
-    }
-
-    fun setDisabledMonths(disabled: List<MonthEntry>) {
-        disabledMonths.apply {
-            clear()
-            addAll(disabled)
-            if (any { it.compare(selection) })
-                clearSelection()
-        }
-        initYearModels()
     }
 
     private fun getPageByYear(year: Int): YearPageView? {

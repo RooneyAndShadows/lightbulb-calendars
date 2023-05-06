@@ -25,6 +25,7 @@ import com.github.rooneyandshadows.lightbulb.commons.utils.ParcelUtils
 import com.github.rooneyandshadows.lightbulb.commons.utils.ResourceUtils
 import java.time.OffsetDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -35,7 +36,7 @@ class MonthCalendarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
+    defStyleRes: Int = 0,
 ) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
     private lateinit var headerYearTextView: TextView
     private lateinit var buttonYearPrev: AppCompatImageButton
@@ -360,12 +361,12 @@ class MonthCalendarView @JvmOverloads constructor(
     }
 
     fun setDisabledMonths(disabledMonths: List<MonthEntry>) {
-        adapter.setDisabledMonths(disabledMonths)
+        adapter.disabledMonths = disabledMonths
         handleInitialPosition()
     }
 
     fun setEnabledMonths(enabledMonths: List<MonthEntry>) {
-        adapter.setEnabledMonths(enabledMonths)
+        adapter.enabledMonths = enabledMonths
         handleInitialPosition()
     }
 
@@ -415,8 +416,8 @@ class MonthCalendarView @JvmOverloads constructor(
     }
 
     private class SavedState : BaseSavedState {
-        var enabledMonths: List<MonthEntry> = mutableListOf()
-        var disabledMonths: List<MonthEntry> = mutableListOf()
+        var enabledMonths: List<MonthEntry> = listOf()
+        var disabledMonths: List<MonthEntry> = listOf()
         var selectedMonth: MonthEntry? = null
         var minYear: Int = -1
         var maxYear: Int = -1
@@ -428,8 +429,8 @@ class MonthCalendarView @JvmOverloads constructor(
         constructor(superState: Parcelable?) : super(superState)
 
         private constructor(parcel: Parcel) : super(parcel) {
-            enabledMonths = ParcelUtils.readList(parcel, MonthEntry::class.java) as MutableList<MonthEntry>
-            disabledMonths = ParcelUtils.readList(parcel, MonthEntry::class.java) as MutableList<MonthEntry>
+            enabledMonths = ParcelUtils.readArrayList(parcel, MonthEntry::class.java)
+            disabledMonths = ParcelUtils.readArrayList(parcel, MonthEntry::class.java)
             selectedMonth = ParcelUtils.readParcelable(parcel, MonthEntry::class.java)
             minYear = parcel.readInt()
             maxYear = parcel.readInt()
@@ -442,8 +443,8 @@ class MonthCalendarView @JvmOverloads constructor(
 
         override fun writeToParcel(out: Parcel, flags: Int) {
             super.writeToParcel(out, flags)
-            ParcelUtils.writeTypedList(out, enabledMonths)
-            ParcelUtils.writeTypedList(out, disabledMonths)
+            ParcelUtils.writeArrayList(out, ArrayList(enabledMonths))
+            ParcelUtils.writeArrayList(out, ArrayList(disabledMonths))
             ParcelUtils.writeParcelable(out, selectedMonth)
             out.writeInt(minYear)
             out.writeInt(maxYear)
@@ -508,7 +509,7 @@ class MonthCalendarView @JvmOverloads constructor(
                 override fun onSelectionChanged(
                     monthCalendarView: MonthCalendarView,
                     newSelection: MonthEntry?,
-                    oldSelection: MonthEntry?
+                    oldSelection: MonthEntry?,
                 ) {
                     attrChange.onChange()
                 }
